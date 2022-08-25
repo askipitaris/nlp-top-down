@@ -1,4 +1,5 @@
-from flask import Blueprint, Response, request, jsonify
+from flask import Blueprint, request, jsonify
+from application.webscraping.snp import scraping_snp
 
 core = Blueprint("core", __name__)
 
@@ -10,8 +11,14 @@ def start():
     user_email = req['user_email'].strip()
     scraping_target = req['scraping_target'].strip()
 
+    switcher = {
+        'S&P': scraping_snp.get_documents(industry)
+    }
+    scraping_response = switcher.get(scraping_target, 'Invalid target identifier. Valid target identifiers include: \'S&P\'')
+
     return jsonify(
-        industry=industry,
-        user_email=user_email,
-        scraping_target=scraping_target
+        scraping_response,
+        industry,
+        user_email,
+        scraping_target
     )
