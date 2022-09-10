@@ -17,8 +17,10 @@ def start():
         scraping_response = 'Invalid target identifier. Valid target identifiers include: \'S&P\''
 
     return jsonify(
-        scraping_response,
-        industry,
-        user_email,
-        scraping_target
+        {
+            'files_downloaded': scraping_response,
+            'industry': industry,
+            'user_email': user_email,
+            'scraping_target': scraping_target
+        }
     )
