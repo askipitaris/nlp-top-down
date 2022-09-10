@@ -11,10 +11,10 @@ def start():
     user_email = req['user_email'].strip()
     scraping_target = req['scraping_target'].strip()
 
-    switcher = {
-        'S&P': scraping_snp.get_documents(industry)
-    }
-    scraping_response = switcher.get(scraping_target, 'Invalid target identifier. Valid target identifiers include: \'S&P\'')
+    if scraping_target == 'S&P':
+        scraping_response = scraping_snp.get_documents(industry)
+    else:
+        scraping_response = 'Invalid target identifier. Valid target identifiers include: \'S&P\''
 
     return jsonify(
         scraping_response,
